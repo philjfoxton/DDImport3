@@ -48,7 +48,7 @@ module "pritunl" {
   vpc_security_group_ids      = [module.pritunl_sg.this_security_group_id]
   subnet_id                   = data.terraform_remote_state.vpc.outputs.public_subnets[0]
   associate_public_ip_address = true
-
+  key_name                    = data.terraform_remote_state.keypair.outputs.infra_key_name
   root_block_device = [
     {
       volume_type           = "gp2"
