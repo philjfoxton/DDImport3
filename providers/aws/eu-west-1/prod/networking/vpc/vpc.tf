@@ -13,15 +13,15 @@ module "vpc" {
   enable_s3_endpoint     = false
 
   private_subnet_tags = {
-    SubnetType                               = "Private"
-    "kubernetes.io/cluster/pfm-prod-cluster" = "shared"
-    "kubernetes.io/role/internal-elb"        = "1"
+    SubnetType                                        = "Private"
+    "kubernetes.io/cluster/${local.pfm_cluster_name}" = "shared"
+    "kubernetes.io/role/internal-elb"                 = "1"
   }
 
   public_subnet_tags = {
-    SubnetType                               = "Public"
-    "kubernetes.io/cluster/pfm-prod-cluster" = "shared"
-    "kubernetes.io/role/elb"                 = "1"
+    SubnetType                                        = "Public"
+    "kubernetes.io/cluster/${local.pfm_cluster_name}" = "shared"
+    "kubernetes.io/role/elb"                          = "1"
   }
 
   tags = {
