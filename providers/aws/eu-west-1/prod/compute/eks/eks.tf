@@ -10,7 +10,6 @@ module "prod_eks" {
 
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = false
-
   cluster_log_retention_in_days = 30
   cluster_enabled_log_types = [
     "api",
