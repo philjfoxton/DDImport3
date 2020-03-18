@@ -1,6 +1,6 @@
 locals {
   cluster_name = "pfm-prod-cluster"
-  subnets      = data.terraform_remote_state.prod_vpc.outputs.private_subnets
+  subnets      = data.terraform_remote_state.vpc.outputs.private_subnets
 
   cluster_tags = {
     Terraform   = "true"

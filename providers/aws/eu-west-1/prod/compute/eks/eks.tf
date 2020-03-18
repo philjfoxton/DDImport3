@@ -3,7 +3,7 @@ module "prod_eks" {
   version                = "10.0.0"
   cluster_name           = local.cluster_name
   subnets                = local.subnets
-  vpc_id                 = data.terraform_remote_state.prod_vpc.outputs.vpc_id
+  vpc_id                 = data.terraform_remote_state.vpc.outputs.vpc_id
   cluster_version        = local.cluster_version
   cluster_create_timeout = "60m"
   cluster_delete_timeout = "60m"

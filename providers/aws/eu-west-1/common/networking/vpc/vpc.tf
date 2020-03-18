@@ -1,14 +1,14 @@
 module "vpc" {
   source                 = "terraform-aws-modules/vpc/aws"
   version                = "2.29.0"
-  name                   = "nbb-aggregator.tarabutgateway.net"
+  name                   = "pfm-production-vpc"
   cidr                   = local.vpc_cidr
   azs                    = local.vpc_azs
   private_subnets        = local.vpc_private_subnets
   public_subnets         = local.vpc_public_subnets
   enable_nat_gateway     = true
   single_nat_gateway     = true
-  one_nat_gateway_per_az = false
+  one_nat_gateway_per_az = true
   enable_dns_hostnames   = true
   enable_s3_endpoint     = true
 
@@ -26,10 +26,7 @@ module "vpc" {
 
   tags = {
     Terraform                                                 = "true"
-    KubernetesCluster                                         = "nbb-aggregator.tarabutgateway.net"
     Environment                                               = "production"
-    "kubernetes.io/cluster/nbb-aggregator.tarabutgateway.net" = "owned"
     "kubernetes.io/cluster/${local.pfm_cluster_name}"         = "shared"
-
   }
 }
