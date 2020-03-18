@@ -1,6 +1,6 @@
 module "prod_eks" {
   source                 = "terraform-aws-modules/eks/aws"
-  version                = "8.2.0"
+  version                = "10.0.0"
   cluster_name           = local.cluster_name
   subnets                = local.subnets
   vpc_id                 = data.terraform_remote_state.prod_vpc.outputs.vpc_id
@@ -59,6 +59,6 @@ module "prod_eks" {
   write_kubeconfig = false
   manage_aws_auth  = true
 
-  worker_ami_name_filter = "amazon-eks-node-1.14-v20200312"
+  worker_ami_name_filter = "amazon-eks-node-1.15-v20200312"
   tags                   = local.cluster_tags
 }

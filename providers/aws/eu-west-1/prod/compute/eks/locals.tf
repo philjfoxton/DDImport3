@@ -6,7 +6,7 @@ locals {
     Terraform   = "true"
     Environment = "prod"
   }
-  cluster_version = "1.14"
+  cluster_version = "1.15"
 
 
   default_eks_workers_iam_policies = [
@@ -16,7 +16,7 @@ locals {
   ]
 
   workers_group = {
-    instance_type = "t3.large"
+    instance_type = "m5.large"
 
     asg_max_size         = 5
     asg_min_size         = 1
