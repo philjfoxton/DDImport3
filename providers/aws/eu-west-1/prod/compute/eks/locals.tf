@@ -18,7 +18,7 @@ locals {
   workers_group = {
     instance_type = "m5.large"
 
-    asg_max_size         = 5
+    asg_max_size         = 3
     asg_min_size         = 1
     asg_desired_capacity = 1
 
@@ -28,6 +28,5 @@ locals {
 
     autoscaling_enabled = true
   }
-
 
 }

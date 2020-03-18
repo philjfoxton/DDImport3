@@ -10,7 +10,7 @@ module "vpc" {
   single_nat_gateway     = true
   one_nat_gateway_per_az = false
   enable_dns_hostnames   = true
-  enable_s3_endpoint     = false
+  enable_s3_endpoint     = true
 
   private_subnet_tags = {
     SubnetType                                        = "Private"
@@ -29,5 +29,7 @@ module "vpc" {
     KubernetesCluster                                         = "nbb-aggregator.tarabutgateway.net"
     Environment                                               = "production"
     "kubernetes.io/cluster/nbb-aggregator.tarabutgateway.net" = "owned"
+    "kubernetes.io/cluster/${local.pfm_cluster_name}"         = "shared"
+
   }
 }

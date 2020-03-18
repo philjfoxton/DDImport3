@@ -34,6 +34,7 @@ module "prod_eks" {
       )
     ],
   )
+
   map_users = [
     {
       userarn  = "arn:aws:iam::881792143615:user/maksym.kryva"
@@ -53,6 +54,7 @@ module "prod_eks" {
       groups   = ["system:masters"]
     },
   ]
+
 
   worker_sg_ingress_from_port = "0"
 
