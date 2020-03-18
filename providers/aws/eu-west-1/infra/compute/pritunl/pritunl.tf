@@ -18,9 +18,9 @@ module "pritunl_sg" {
 
   ingress_with_cidr_blocks = [
     {
-      from_port   = 11461
-      to_port     = 11461
-      protocol    = "all"
+      from_port   = 17502
+      to_port     = 17502
+      protocol    = "udp"
       cidr_blocks = "0.0.0.0/0"
     },
     {
