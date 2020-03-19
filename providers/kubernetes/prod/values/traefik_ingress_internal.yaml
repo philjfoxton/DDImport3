@@ -1,0 +1,195 @@
+image: traefik
+imageTag: v1.7.20-alpine
+## can switch the service type to NodePort if required
+serviceType: LoadBalancer
+whiteListSourceRange: []
+externalTrafficPolicy: Cluster
+replicas: 3
+
+startupArguments:
+  - "--checknewversion=false"
+
+podDisruptionBudget:
+  minAvailable: 1
+
+resources:
+  requests:
+    cpu: 125m
+    memory: 128Mi
+  limits:
+    memory: 128Mi
+
+debug:
+  enabled: true
+
+kubernetes:
+  ingressClass: traefik-internal
+  ingressEndpoint:
+    useDefaultPublishedService: true
+proxyProtocol:
+  enabled: false
+forwardedHeaders:
+  enabled: false
+
+ssl:
+  enabled: false
+  upstream: true
+  enforced: false
+
+  # defaultCert:
+  # defaultKey:
+acme:
+  enabled: false
+  email: admin@example.com
+  staging: true
+  logging: false
+  challengeType: tls-sni-01
+  dnsProvider:
+    name: nil
+    auroradns:
+      AURORA_USER_ID: ""
+      AURORA_KEY: ""
+      AURORA_ENDPOINT: ""
+    azure:
+      AZURE_CLIENT_ID: ""
+      AZURE_CLIENT_SECRET: ""
+      AZURE_SUBSCRIPTION_ID: ""
+      AZURE_TENANT_ID: ""
+      AZURE_RESOURCE_GROUP: ""
+    cloudflare:
+      CLOUDFLARE_EMAIL: ""
+      CLOUDFLARE_API_KEY: ""
+    digitalocean:
+      DO_AUTH_TOKEN: ""
+    dnsimple:
+      DNSIMPLE_OAUTH_TOKEN: ""
+      DNSIMPLE_BASE_URL: ""
+    dnsmadeeasy:
+      DNSMADEEASY_API_KEY: ""
+      DNSMADEEASY_API_SECRET: ""
+      DNSMADEEASY_SANDBOX: ""
+    dnspod:
+      DNSPOD_API_KEY: ""
+    dyn:
+      DYN_CUSTOMER_NAME: ""
+      DYN_USER_NAME: ""
+      DYN_PASSWORD: ""
+    exoscale:
+      EXOSCALE_API_KEY: ""
+      EXOSCALE_API_SECRET: ""
+      EXOSCALE_ENDPOINT: ""
+    gandi:
+      GANDI_API_KEY: ""
+    godaddy:
+      GODADDY_API_KEY: ""
+      GODADDY_API_SECRET: ""
+    gcloud:
+      GCE_PROJECT: ""
+      GCE_SERVICE_ACCOUNT_FILE: ""
+    linode:
+      LINODE_API_KEY: ""
+    namecheap:
+      NAMECHEAP_API_USER: ""
+      NAMECHEAP_API_KEY: ""
+    ns1:
+      NS1_API_KEY: ""
+    otc:
+      OTC_DOMAIN_NAME: ""
+      OTC_USER_NAME: ""
+      OTC_PASSWORD: ""
+      OTC_PROJECT_NAME: ""
+      OTC_IDENTITY_ENDPOINT: ""
+    pdns:
+      PDNS_API_URL: ""
+    rackspace:
+      RACKSPACE_USER: ""
+      RACKSPACE_API_KEY: ""
+    rfc2136:
+      RFC2136_NAMESERVER: ""
+      RFC2136_TSIG_ALGORITHM: ""
+      RFC2136_TSIG_KEY: ""
+      RFC2136_TSIG_SECRET: ""
+      RFC2136_TIMEOUT: ""
+    route53:
+      AWS_REGION: ""
+      AWS_ACCESS_KEY_ID: ""
+      AWS_SECRET_ACCESS_KEY: ""
+    vultr:
+      VULTR_API_KEY: ""
+  ## Save ACME certs to a persistent volume. WARNING: If you do not do this, you will re-request
+  ## certs every time a pod (re-)starts and you WILL be rate limited!
+  persistence:
+    enabled: false
+    annotations: {}
+    ## acme data Persistent Volume Storage Class
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    # storageClass: "-"
+    accessMode: ReadWriteOnce
+    size: 1Gi
+    ## A manually managed Persistent Volume Claim
+    ## Requires persistence.enabled: true
+    ## If defined, PVC must be created manually before volume will be bound
+    ##
+    # existingClaim:
+dashboard:
+  enabled: true
+  domain: traefik-internal-dashboard.prod.pfm.internal
+  ingress:
+    annotations:
+      kubernetes.io/ingress.class: traefik-internal
+
+service:
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-internal: '0.0.0.0/0'
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+    external-dns.alpha.kubernetes.io/hostname: ingress-internal.prod.pfm.internal
+gzip:
+  enabled: true
+accessLogs:
+  enabled: true
+  format: json
+  fields:
+    names:
+      Etag: drop
+      origin_Etag: drop
+      downstream_Etag: drop
+      request_If-None-Match: drop
+      If-None-Match: drop
+      request_X-Wsse: drop
+      X-Wsse: drop
+      x-wsse: drop
+    headers:
+      names:
+        Etag: drop
+        origin_Etag: drop
+        downstream_Etag: drop
+        request_If-None-Match: drop
+        If-None-Match: drop
+        request_X-Wsse: drop
+        X-Wsse: drop
+        x-wsse: drop
+rbac:
+  enabled: true
+metrics:
+  prometheus:
+    enabled: true
+    # buckets: [0.1,0.3,1.2,5]
+  datadog:
+    enabled: false
+    # address: localhost:8125
+    # pushinterval: 10s
+  statsd:
+    enabled: false
+    # address: localhost:8125
+    # pushinterval: 10s
+deployment:
+  hostPort:
+    httpEnabled: false
+    httpsEnabled: false
+    dashboardEnabled: false
+sendAnonymousUsage: false
