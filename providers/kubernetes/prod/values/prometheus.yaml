@@ -1,0 +1,233 @@
+commonLabels:
+  prometheus: prometheus-k8s-prod
+defaultRules:
+  create: true
+  rules:
+    alertmanager: true
+    etcd: false
+    general: true
+    k8s: true
+    kubeApiserver: false
+    kubePrometheusNodeAlerting: true
+    kubePrometheusNodeRecording: true
+    kubernetesAbsent: true
+    kubernetesApps: true
+    kubernetesResources: true
+    kubernetesStorage: true
+    kubernetesSystem: true
+    kubeScheduler: false
+    network: true
+    node: true
+    prometheus: true
+    prometheusOperator: true
+    time: true
+global:
+  rbac:
+    create: true
+    pspEnabled: true
+alertmanager:
+  enabled: true
+  podDisruptionBudget:
+    enabled: true
+    minAvailable: 1
+    maxUnavailable: ""
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: traefik-internal
+    hosts:
+      - alertmanager.prod.pfm.internal
+  serviceMonitor:
+    selfMonitor: true
+  alertmanagerSpec:
+    image:
+      repository: quay.io/prometheus/alertmanager
+      tag: v0.20.0
+    replicas: 2
+    retention: 1h
+    storage:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: gp2
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 50Gi
+    resources:
+      requests:
+        memory: 128Mi
+        cpu: 125m
+      limits:
+        memory: 256Mi
+grafana:
+  enabled: true
+  resources:
+    requests:
+      cpu: 250m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
+  image:
+    repository: grafana/grafana
+    tag: 6.6.2
+  defaultDashboardsEnabled: true
+  adminPassword: ${grafana_password}
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: traefik-internal
+    hosts:
+      - grafana.prod.pfm.internal
+    path: /
+  sidecar:
+    dashboards:
+      enabled: true
+      label: grafana_dashboard
+    datasources:
+      enabled: true
+      label: grafana_datasource
+      defaultDatasourceEnabled: true
+    image: kiwigrid/k8s-sidecar:0.1.75
+  plugins:
+    - grafana-piechart-panel
+kubeApiServer:
+  enabled: false
+kubelet:
+  enabled: true
+  namespace: kube-system
+  serviceMonitor:
+    https: true
+kubeControllerManager:
+  enabled: false
+kubeProxy:
+  enabled: false
+coreDns:
+  enabled: true
+  service:
+    selector:
+      k8s-app: kube-dns
+kubeDns:
+  enabled: false
+kubeEtcd:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubeStateMetrics:
+  enabled: true
+kube-state-metrics:
+  rbac:
+    create: true
+  image:
+    repository: quay.io/coreos/kube-state-metrics
+    tag: v1.9.5
+nodeExporter:
+  enabled: true
+  jobLabel: jobLabel
+prometheus-node-exporter:
+  image:
+    repository: quay.io/prometheus/node-exporter
+    tag: v0.18.1
+  resources:
+    requests:
+      cpu: 25m
+      memory: 64Mi
+    limits:
+      memory: 64Mi
+  podLabels:
+    jobLabel: node-exporter
+  extraArgs:
+    - --collector.filesystem.ignored-mount-points=^/(dev|proc|sys|var/lib/docker/.+)($|/)
+    - --collector.filesystem.ignored-fs-types=^(autofs|binfmt_misc|cgroup|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|mqueue|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|sysfs|tracefs)$
+prometheusOperator:
+  enabled: true
+  serviceAccount:
+    create: true
+  kubeletService:
+    enabled: true
+    namespace: kube-system
+  serviceMonitor:
+    selfMonitor: true
+  resources:
+    requests:
+      memory: 128Mi
+      cpu: 125m
+    limits:
+      memory: 256Mi
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 65534
+  image:
+    repository: quay.io/coreos/prometheus-operator
+    tag: v0.37.0
+    pullPolicy: IfNotPresent
+  configmapReloadImage:
+    repository: quay.io/coreos/configmap-reload
+    tag: v0.0.1
+  prometheusConfigReloaderImage:
+    repository: quay.io/coreos/prometheus-config-reloader
+    tag: v0.37.0
+  hyperkubeImage:
+    repository: k8s.gcr.io/hyperkube
+    tag: v1.15.10
+    pullPolicy: IfNotPresent
+prometheus:
+  enabled: true
+  serviceAccount:
+    create: true
+  rbac:
+    roleNamespaces:
+      - kube-system
+  podDisruptionBudget:
+    enabled: true
+    minAvailable: 1
+    maxUnavailable: ""
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: traefik-internal
+    hosts:
+      - prometheus.prod.pfm.internal
+    paths:
+      - /
+  serviceMonitor:
+    selfMonitor: true
+  prometheusSpec:
+    scrapeInterval: 15s
+    evaluationInterval: 15s
+    listenLocal: false
+    image:
+      repository: quay.io/prometheus/prometheus
+      tag: v2.16.0
+    ruleSelectorNilUsesHelmValues: true
+    ruleSelector:
+      matchExpressions:
+        - key: prometheus
+          operator: In
+          values:
+            - prometheus-k8s-prod
+    serviceMonitorSelectorNilUsesHelmValues: true
+    serviceMonitorSelector:
+      matchLabels:
+        prometheus: prometheus-k8s-prod
+    retention: 3d
+    replicas: 2
+    logLevel: info
+    podMetadata: {}
+    resources:
+      requests:
+        memory: 2Gi
+        cpu: 500m
+      limits:
+        memory: 3Gi
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: gp2
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 100Gi
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      fsGroup: 2000
