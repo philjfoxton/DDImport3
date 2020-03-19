@@ -11,4 +11,9 @@ data "helm_repository" "stable" {
   url  = "https://kubernetes-charts.storage.googleapis.com"
 }
 
+data "helm_repository" "elastic" {
+  name = "elastic"
+  url  = "https://helm.elastic.co"
+}
+
 data "aws_caller_identity" "current" {}

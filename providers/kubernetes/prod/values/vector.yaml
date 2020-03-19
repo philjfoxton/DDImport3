@@ -1,0 +1,16 @@
+image:
+  repository: timberio/vector
+  tag: 0.8.2-alpine
+  pullPolicy: IfNotPresent
+
+config: |-
+  data_dir = "/var/lib/vector"
+  [sources.kubernetes]
+    type = "kubernetes"
+
+
+  [sinks.es_cluster]
+    inputs       = ["kubernetes"]
+    type         = "elasticsearch"
+    host         = "http://es-logs.prod.pfm.internal"
+    index        = "vector-%Y-%m-%d"

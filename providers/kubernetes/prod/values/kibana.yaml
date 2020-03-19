@@ -1,0 +1,11 @@
+elasticsearchHosts: http://es-logs.prod.pfm.internal/
+
+serviceAccount: ${serviceAccountName}
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: traefik-internal
+  hosts:
+    - kibana.prod.pfm.internal
+  path: /
