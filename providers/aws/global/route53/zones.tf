@@ -5,10 +5,6 @@ resource "aws_route53_zone" "internal_zone" {
     vpc_id = data.terraform_remote_state.prod_vpc.outputs.vpc_id
   }
 
-  vpc {
-    vpc_id = data.terraform_remote_state.infra_vpc.outputs.vpc_id
-  }
-
   count = length(local.internal_zones)
 }
 

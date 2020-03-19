@@ -23,7 +23,7 @@ debug:
   enabled: true
 
 kubernetes:
-  ingressClass: traefik-internal
+  ingressClass: traefik-external
   ingressEndpoint:
     useDefaultPublishedService: true
 proxyProtocol:
@@ -32,9 +32,9 @@ forwardedHeaders:
   enabled: false
 
 ssl:
-  enabled: false
-  upstream: false
-  enforced: false
+  enabled: true
+  upstream: true
+  enforced: true
 
   # defaultCert:
   # defaultKey:
@@ -138,16 +138,17 @@ acme:
     # existingClaim:
 dashboard:
   enabled: true
-  domain: traefik-internal-dashboard.prod.pfm.internal
+  domain: traefik-external-dashboard.prod.pfm.internal
   ingress:
     annotations:
       kubernetes.io/ingress.class: traefik-internal
 
 service:
   annotations:
-    service.beta.kubernetes.io/aws-load-balancer-internal: '0.0.0.0/0'
     service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
-    external-dns.alpha.kubernetes.io/hostname: ingress-internal.prod.pfm.internal
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: 'arn:aws:acm:eu-west-1:881792143615:certificate/ae5f1c5d-cd39-4f6e-a6fe-04ae8fe77169'
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: '443'
+    external-dns.alpha.kubernetes.io/hostname: pfm-ingress.tarabutgateway.net
 gzip:
   enabled: true
 accessLogs:
