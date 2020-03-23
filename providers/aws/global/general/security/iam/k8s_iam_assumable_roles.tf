@@ -89,7 +89,5 @@ module "statements_service" {
   role_name    = "statements_service"
   provider_url = local.eks_oidc_provider
   role_policy_arns = [
-    module.statements_service_policy.arn
-
   ]
 }
