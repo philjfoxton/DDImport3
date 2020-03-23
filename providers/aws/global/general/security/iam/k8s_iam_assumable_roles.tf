@@ -9,3 +9,87 @@ module "external_dns_role" {
 
   ]
 }
+
+module "connections_service" {
+  source       = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
+  version      = "2.7.0"
+  create_role  = true
+  role_name    = "connections_service"
+  provider_url = local.eks_oidc_provider
+  role_policy_arns = [
+    module.connections_service_policy.arn
+
+  ]
+}
+
+module "goals_service" {
+  source       = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
+  version      = "2.7.0"
+  create_role  = true
+  role_name    = "goals_service"
+  provider_url = local.eks_oidc_provider
+  role_policy_arns = [
+    module.goals_service_policy.arn
+
+  ]
+}
+
+module "notifications_api" {
+  source       = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
+  version      = "2.7.0"
+  create_role  = true
+  role_name    = "notifications_api"
+  provider_url = local.eks_oidc_provider
+  role_policy_arns = [
+    module.notifications_api_policy.arn
+
+  ]
+}
+
+module "notifications_service" {
+  source       = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
+  version      = "2.7.0"
+  create_role  = true
+  role_name    = "notifications_service"
+  provider_url = local.eks_oidc_provider
+  role_policy_arns = [
+    module.notifications_service_policy.arn
+
+  ]
+}
+
+module "obpexporter_service" {
+  source       = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
+  version      = "2.7.0"
+  create_role  = true
+  role_name    = "obpexporter_service"
+  provider_url = local.eks_oidc_provider
+  role_policy_arns = [
+    module.obpexporter_service_policy.arn
+
+  ]
+}
+
+module "transactions_service" {
+  source       = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
+  version      = "2.7.0"
+  create_role  = true
+  role_name    = "transactions_service"
+  provider_url = local.eks_oidc_provider
+  role_policy_arns = [
+    module.transactions_service_policy.arn
+
+  ]
+}
+
+module "statements_service" {
+  source       = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
+  version      = "2.7.0"
+  create_role  = true
+  role_name    = "statements_service"
+  provider_url = local.eks_oidc_provider
+  role_policy_arns = [
+    module.statements_service_policy.arn
+
+  ]
+}
