@@ -1,8 +1,30 @@
 locals {
-  buckets = [
-    "pfm-categories-icons",
-    "pfm-users-avatars",
-    "pfm-goals-images",
+
+  project_name = "pfm"
+  env = [
+    "production",
   ]
-  formated_buckets = formatlist("%s-%s-%s", data.aws_caller_identity.current.account_id, local.buckets, var.aws_region)
+
+  new_buckets = [
+    "categories-icons",
+    "users-avatars",
+    "goals-images",
+  ]
+
+  formated_buckets = flatten(
+    [
+      for e in local.env :
+      [
+        for n in local.new_buckets : format
+        (
+          "%s-%s-%s-%s-%s",
+          data.aws_caller_identity.current.account_id,
+          local.project_name,
+          e,
+          n,
+          var.aws_region
+        )
+      ]
+    ]
+  )
 }
