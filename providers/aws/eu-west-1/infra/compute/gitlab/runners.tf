@@ -1,6 +1,6 @@
 module "gitlab_runner" {
   source     = "npalm/gitlab-runner/aws"
-  version    = "4.12.0"
+  version    = "4.10.0"
   aws_region = var.aws_region
 
   environment              = local.environment
@@ -15,7 +15,7 @@ module "gitlab_runner" {
   gitlab_runner_registration_config = {
     registration_token = data.aws_kms_secrets.gitlab_token.plaintext["gitlab"]
     tag_list           = "pfm_prod,prod_docker_runner,docker_runner"
-    description        = "Infra PFM Runner"
+    description        = "Production PFM Runner"
     locked_to_project  = "false"
     run_untagged       = "true"
     maximum_timeout    = "3600"
@@ -48,23 +48,25 @@ module "gitlab_runner" {
 
   runners_privileged              = "false"
   enable_gitlab_runner_ssh_access = true
+  ssh_key_pair                    = "infra"
   gitlab_runner_ssh_cidr_blocks   = [data.terraform_remote_state.vpc.outputs.vpc_cidr]
-  runners_image                   = "docker:19.03.2"
+  runners_image                   = "docker:19.03.8"
   gitlab_runner_version           = local.gitlab_runner_version
+  enable_cloudwatch_logging       = false
 
-  enable_cloudwatch_logging = false
+  ami_filter = {
+    name = ["amzn2-ami-hvm-*-x86_64-ebs"]
+  }
+  ami_owners = ["amazon"]
+
   runner_ami_filter = {
     name = ["ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"]
   }
-
   runner_ami_owners = ["099720109477"]
-
 
   overrides = {
     name_runner_agent_instance  = local.runner_name
     name_sg                     = ""
     name_docker_machine_runners = ""
   }
-
-  ssh_key_pair = data.terraform_remote_state.keypair.outputs.infra_key_name
 }
