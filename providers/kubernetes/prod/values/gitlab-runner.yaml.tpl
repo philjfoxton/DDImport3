@@ -7,7 +7,7 @@ rbac:
 runners:
   image: docker:19.03.8
   privileged: false
-  tags: "prod-k8s-runner"
+  tags: "nbb-prod-k8s-runner"
   runUntagged: false
   serviceAccountName: ${serviceAccountName}
 
