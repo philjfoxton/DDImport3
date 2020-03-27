@@ -19,7 +19,7 @@ resource "aws_ecr_repository_policy" "nonprod_policy" {
       "Sid": "nonprod",
       "Effect": "Allow",
       "Principal": {
-        "AWS": "arn:aws:iam::063523468743:role/infra-ireland-docker-machine-role"
+        "AWS": "arn:aws:iam::063523468743:root"
       },
       "Action": [
         "ecr:*"
