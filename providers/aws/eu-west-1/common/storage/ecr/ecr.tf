@@ -10,7 +10,7 @@ resource "aws_ecr_repository" "repositories" {
 }
 
 
-resource "aws_ecr_repository_policy" "nbb_policy" {
+resource "aws_ecr_repository_policy" "nonprod_policy" {
   policy     = <<EOF
 {
   "Version": "2008-10-17",
