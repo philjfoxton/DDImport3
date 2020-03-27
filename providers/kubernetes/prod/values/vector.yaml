@@ -8,9 +8,15 @@ config: |-
   [sources.kubernetes]
     type = "kubernetes"
 
+  [transforms.json_parser]
+    type = "json_parser"
+    inputs = ["kubernetes"]
+    drop_invalid = true
+    drop_field = true
+    field = "message"
 
   [sinks.es_cluster]
-    inputs       = ["kubernetes"]
+    inputs       = ["json_parser"]
     type         = "elasticsearch"
     host         = "http://es-logs.prod.pfm.internal"
     index        = "vector-%Y-%m-%d"
