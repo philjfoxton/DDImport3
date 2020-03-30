@@ -160,6 +160,8 @@ module "notifications_service_policy" {
         "sqs:*"
       ],
       "Resource": [
+        "arn:aws:sns:eu-west-1:881792143615:app/GCM/pfm-android",
+        "arn:aws:sns:eu-west-1:881792143615:app/APNS/pfm-ios",
         "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-NbbProduction-SavePushToken"]}",
         "${data.terraform_remote_state.sqs.outputs.sqs_dlq_arn["Pfm-NbbProduction-SavePushToken-dlq"]}",
         "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-NbbProduction-DeletePushToken"]}",
