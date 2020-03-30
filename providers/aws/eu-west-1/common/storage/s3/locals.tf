@@ -2,7 +2,7 @@ locals {
 
   project_name = "pfm"
   env = [
-    "production",
+    "nbbproduction",
   ]
 
   new_buckets = [

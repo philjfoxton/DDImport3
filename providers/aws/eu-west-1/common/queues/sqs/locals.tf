@@ -1,6 +1,6 @@
 locals {
   sqs_env = [
-    "Production",
+    "NbbProduction",
   ]
   queue_names = [
     "DeletePushToken",

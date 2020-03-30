@@ -51,7 +51,7 @@ module "auth_service_policy" {
         "s3:*"
       ],
       "Resource": [
-        "${data.terraform_remote_state.s3.outputs.buckets["881792143615-pfm-production-goals-images-eu-west-1"]}"
+        "${data.terraform_remote_state.s3.outputs.buckets["881792143615-pfm-nbbproduction-goals-images-eu-west-1"]}"
       ]
     },
     {
@@ -60,10 +60,10 @@ module "auth_service_policy" {
         "sqs:*"
       ],
       "Resource": [
-        "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-Production-SaveCpr"]}",
-        "${data.terraform_remote_state.sqs.outputs.sqs_dlq_arn["Pfm-Production-SaveCpr-dlq"]}",
-        "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-Production-SendUserNotification"]}",
-        "${data.terraform_remote_state.sqs.outputs.sqs_dlq_arn["Pfm-Production-SendUserNotification-dlq"]}"
+        "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-NbbProduction-SaveCpr"]}",
+        "${data.terraform_remote_state.sqs.outputs.sqs_dlq_arn["Pfm-NbbProduction-SaveCpr-dlq"]}",
+        "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-NbbProduction-SendUserNotification"]}",
+        "${data.terraform_remote_state.sqs.outputs.sqs_dlq_arn["Pfm-NbbProduction-SendUserNotification-dlq"]}"
       ]
     }
   ]
@@ -86,10 +86,10 @@ module "connections_service_policy" {
         "sqs:*"
       ],
       "Resource": [
-        "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-Production-SaveCpr"]}",
-        "${data.terraform_remote_state.sqs.outputs.sqs_dlq_arn["Pfm-Production-SaveCpr-dlq"]}",
-        "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-Production-UserTokenConnected"]}",
-        "${data.terraform_remote_state.sqs.outputs.sqs_dlq_arn["Pfm-Production-UserTokenConnected-dlq"]}"
+        "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-NbbProduction-SaveCpr"]}",
+        "${data.terraform_remote_state.sqs.outputs.sqs_dlq_arn["Pfm-NbbProduction-SaveCpr-dlq"]}",
+        "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-NbbProduction-UserTokenConnected"]}",
+        "${data.terraform_remote_state.sqs.outputs.sqs_dlq_arn["Pfm-NbbProduction-UserTokenConnected-dlq"]}"
       ]
     }
   ]
@@ -112,7 +112,7 @@ module "goals_service_policy" {
         "s3:*"
       ],
       "Resource": [
-        "${data.terraform_remote_state.s3.outputs.buckets["881792143615-pfm-production-goals-images-eu-west-1"]}"
+        "${data.terraform_remote_state.s3.outputs.buckets["881792143615-pfm-nbbproduction-goals-images-eu-west-1"]}"
       ]
     }
   ]
@@ -135,10 +135,10 @@ module "notifications_api_policy" {
         "sqs:*"
       ],
       "Resource": [
-        "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-Production-SavePushToken"]}",
-        "${data.terraform_remote_state.sqs.outputs.sqs_dlq_arn["Pfm-Production-SavePushToken-dlq"]}",
-        "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-Production-DeletePushToken"]}",
-        "${data.terraform_remote_state.sqs.outputs.sqs_dlq_arn["Pfm-Production-DeletePushToken-dlq"]}"
+        "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-NbbProduction-SavePushToken"]}",
+        "${data.terraform_remote_state.sqs.outputs.sqs_dlq_arn["Pfm-NbbProduction-SavePushToken-dlq"]}",
+        "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-NbbProduction-DeletePushToken"]}",
+        "${data.terraform_remote_state.sqs.outputs.sqs_dlq_arn["Pfm-NbbProduction-DeletePushToken-dlq"]}"
       ]
     }
   ]
@@ -160,14 +160,14 @@ module "notifications_service_policy" {
         "sqs:*"
       ],
       "Resource": [
-        "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-Production-SavePushToken"]}",
-        "${data.terraform_remote_state.sqs.outputs.sqs_dlq_arn["Pfm-Production-SavePushToken-dlq"]}",
-        "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-Production-DeletePushToken"]}",
-        "${data.terraform_remote_state.sqs.outputs.sqs_dlq_arn["Pfm-Production-DeletePushToken-dlq"]}",
-        "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-Production-SendUserNotification"]}",
-        "${data.terraform_remote_state.sqs.outputs.sqs_dlq_arn["Pfm-Production-SendUserNotification-dlq"]}",
-        "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-Production-SaveNotificationsUserInfo"]}",
-        "${data.terraform_remote_state.sqs.outputs.sqs_dlq_arn["Pfm-Production-SaveNotificationsUserInfo-dlq"]}"
+        "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-NbbProduction-SavePushToken"]}",
+        "${data.terraform_remote_state.sqs.outputs.sqs_dlq_arn["Pfm-NbbProduction-SavePushToken-dlq"]}",
+        "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-NbbProduction-DeletePushToken"]}",
+        "${data.terraform_remote_state.sqs.outputs.sqs_dlq_arn["Pfm-NbbProduction-DeletePushToken-dlq"]}",
+        "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-NbbProduction-SendUserNotification"]}",
+        "${data.terraform_remote_state.sqs.outputs.sqs_dlq_arn["Pfm-NbbProduction-SendUserNotification-dlq"]}",
+        "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-NbbProduction-SaveNotificationsUserInfo"]}",
+        "${data.terraform_remote_state.sqs.outputs.sqs_dlq_arn["Pfm-NbbProduction-SaveNotificationsUserInfo-dlq"]}"
       ]
     }
   ]
@@ -190,12 +190,12 @@ module "obpexporter_service_policy" {
         "sqs:*"
       ],
       "Resource": [
-        "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-Production-SyncTransactions"]}",
-        "${data.terraform_remote_state.sqs.outputs.sqs_dlq_arn["Pfm-Production-SyncTransactions-dlq"]}",
-        "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-Production-UserTokenConnected"]}",
-        "${data.terraform_remote_state.sqs.outputs.sqs_dlq_arn["Pfm-Production-UserTokenConnected-dlq"]}",
-        "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-Production-SendUserNotification"]}",
-        "${data.terraform_remote_state.sqs.outputs.sqs_dlq_arn["Pfm-Production-SendUserNotification-dlq"]}"
+        "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-NbbProduction-SyncTransactions"]}",
+        "${data.terraform_remote_state.sqs.outputs.sqs_dlq_arn["Pfm-NbbProduction-SyncTransactions-dlq"]}",
+        "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-NbbProduction-UserTokenConnected"]}",
+        "${data.terraform_remote_state.sqs.outputs.sqs_dlq_arn["Pfm-NbbProduction-UserTokenConnected-dlq"]}",
+        "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-NbbProduction-SendUserNotification"]}",
+        "${data.terraform_remote_state.sqs.outputs.sqs_dlq_arn["Pfm-NbbProduction-SendUserNotification-dlq"]}"
       ]
     }
   ]
@@ -218,8 +218,8 @@ module "transactions_service_policy" {
         "sqs:*"
       ],
       "Resource": [
-        "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-Production-SyncTransactions"]}",
-        "${data.terraform_remote_state.sqs.outputs.sqs_dlq_arn["Pfm-Production-SyncTransactions-dlq"]}"
+        "${data.terraform_remote_state.sqs.outputs.sqs_arn["Pfm-NbbProduction-SyncTransactions"]}",
+        "${data.terraform_remote_state.sqs.outputs.sqs_dlq_arn["Pfm-NbbProduction-SyncTransactions-dlq"]}"
       ]
     }
   ]
