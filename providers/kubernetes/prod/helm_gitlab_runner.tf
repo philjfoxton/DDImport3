@@ -20,17 +20,7 @@ resource "kubernetes_cluster_role" "gitlab" {
     }
   }
   rule {
-    api_groups = [""]
-    resources  = ["*"]
-    verbs      = ["*"]
-  }
-  rule {
-    api_groups = ["extensions", "apps", "networking"]
-    resources  = ["*"]
-    verbs      = ["*"]
-  }
-  rule {
-    api_groups = ["monitoring.coreos.com"]
+    api_groups = ["*"]
     resources  = ["*"]
     verbs      = ["*"]
   }
