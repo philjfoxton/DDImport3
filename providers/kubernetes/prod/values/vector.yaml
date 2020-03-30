@@ -8,15 +8,8 @@ config: |-
   [sources.kubernetes]
     type = "kubernetes"
 
-  [transforms.json_parser]
-    type = "json_parser"
-    inputs = ["kubernetes"]
-    drop_invalid = true
-    drop_field = true
-    field = "message"
-
   [sinks.es_cluster]
-    inputs       = ["json_parser"]
+    inputs       = ["kubernetes"]            # only take sampled data
     type         = "elasticsearch"
-    host         = "http://es-logs.prod.pfm.internal"
-    index        = "vector-%Y-%m-%d"
+    host         = "https://es-logs.nonprod.tandem.internal"   # local or external host
+    index        = "vector-%Y-%m-%d"             # daily indices
