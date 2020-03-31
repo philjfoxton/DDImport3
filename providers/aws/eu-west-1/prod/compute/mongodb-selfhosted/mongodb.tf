@@ -29,6 +29,7 @@ module "mongodb" {
   ami                    = data.aws_ami.mongodb.id
   instance_type          = "t3.large"
   vpc_security_group_ids = [module.mongodb_sg.this_security_group_id]
+  key_name               = "infra"
 
   subnet_ids = data.terraform_remote_state.vpc.outputs.private_subnets
 
@@ -51,13 +52,14 @@ module "mongodb" {
       encrypted   = local.encrypted
     }
   ]
+  user_data = data.template_file.mongodb_userdata.rendered
 }
 
 resource "aws_route53_record" "mongodb" {
-  name = "mongodb-${count.index}"
-  type = "A"
+  name    = "mongodb-${count.index}"
+  type    = "A"
   records = [module.mongodb.private_ip[count.index]]
   zone_id = local.route53_zone
-  ttl = 30
-  count = local.instance_count
+  ttl     = 30
+  count   = local.instance_count
 }
