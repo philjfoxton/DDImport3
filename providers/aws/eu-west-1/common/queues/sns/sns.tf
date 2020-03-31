@@ -3,5 +3,5 @@ resource "aws_sns_topic" "ios" {
 }
 
 resource "aws_sns_topic" "android" {
-  name = "pfm-adndroid"
+  name = "pfm-android"
 }

@@ -1,6 +1,6 @@
 image:
   repository: timberio/vector
-  tag: 0.8.2-alpine
+  tag: 0.8.2-alpine@sha256:b637565822868b5e87db576fd91476021fd84e5420a33bb729837dbfd0803ad4
   pullPolicy: IfNotPresent
 
 config: |-
@@ -11,5 +11,14 @@ config: |-
   [sinks.es_cluster]
     inputs       = ["kubernetes"]            # only take sampled data
     type         = "elasticsearch"
-    host         = "https://es-logs.nonprod.tandem.internal"   # local or external host
+    host         = "http://es-logs.prod.pfm.internal"   # local or external host
     index        = "vector-%Y-%m-%d"             # daily indices
+    request.rate_limit_num = 1000
+
+resources:
+  limits:
+    cpu: 400m
+    memory: 400Mi
+  requests:
+    cpu: 200m
+    memory: 200Mi
