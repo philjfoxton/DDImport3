@@ -9,8 +9,14 @@ config: |-
   [sources.kubernetes]
     type = "kubernetes"
 
+  [transforms.json_parser]
+    type = "json_parser"
+    inputs = ["kubernetes"]
+    drop_field = true
+    field = "message"
+
   [sinks.es_cluster]
-    inputs       = ["kubernetes"]            # only take sampled data
+    inputs       = ["json_parser"]            # only take sampled data
     type         = "elasticsearch"
     host         = "http://es-logs.prod.pfm.internal"   # local or external host
     index        = "vector-%Y-%m-%d"             # daily indices
