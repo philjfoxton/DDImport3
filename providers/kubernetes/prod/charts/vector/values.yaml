@@ -1,6 +1,6 @@
 image:
   repository: timberio/vector
-  tag: latest-alpine
+  tag: nightly-alpine
   pullPolicy: IfNotPresent
 
 config: |-
