@@ -10,6 +10,18 @@ module "external_dns_role" {
   ]
 }
 
+module "auth_service" {
+  source       = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
+  version      = "2.7.0"
+  create_role  = true
+  role_name    = "auth_service"
+  provider_url = local.eks_oidc_provider
+  role_policy_arns = [
+    module.auth_service_policy.arn
+  ]
+}
+
+
 module "connections_service" {
   source       = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
   version      = "2.7.0"

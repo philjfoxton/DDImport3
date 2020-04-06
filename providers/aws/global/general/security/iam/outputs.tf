@@ -2,6 +2,10 @@ output "external_dns_role" {
   value = module.external_dns_role.this_iam_role_arn
 }
 
+output "auth_service_role" {
+  value = module.auth_service.this_iam_role_arn
+}
+
 output "connections_service_role" {
   value = module.connections_service.this_iam_role_arn
 }
