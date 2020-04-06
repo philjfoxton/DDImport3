@@ -115,7 +115,8 @@ module "goals_service_policy" {
         "s3:*"
       ],
       "Resource": [
-        "${data.terraform_remote_state.s3.outputs.buckets["881792143615-pfm-nbbproduction-goals-images-eu-west-1"]}"
+        "${data.terraform_remote_state.s3.outputs.buckets["881792143615-pfm-nbbproduction-goals-images-eu-west-1"]}",
+        "${data.terraform_remote_state.s3.outputs.buckets["881792143615-pfm-nbbproduction-goals-images-eu-west-1"]}/*"
       ]
     }
   ]
