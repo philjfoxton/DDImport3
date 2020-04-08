@@ -9,6 +9,8 @@ module "vpc-peering" {
 
   this_vpc_id = module.vpc.vpc_id
   peer_vpc_id = local.unified
+  peer_dns_resolution = true
+  this_dns_resolution = true
 
   auto_accept_peering = true
 
