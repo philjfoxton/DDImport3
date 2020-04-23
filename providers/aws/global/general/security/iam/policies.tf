@@ -161,7 +161,8 @@ module "notifications_service_policy" {
     {
       "Effect": "Allow",
       "Action": [
-        "sqs:*"
+        "sqs:*",
+        "sns:*"
       ],
       "Resource": [
         "arn:aws:sns:eu-west-1:881792143615:app/GCM/pfm-android",
