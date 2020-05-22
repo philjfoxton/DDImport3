@@ -103,3 +103,14 @@ module "statements_service" {
   role_policy_arns = [
   ]
 }
+
+module "alb_ingress_controller_role" {
+  source       = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
+  version      = "2.7.0"
+  create_role  = true
+  role_name    = "pfm_alb-ingresss-controller"
+  provider_url = local.eks_oidc_provider
+  role_policy_arns = [
+    module.alb_ingress_controller_policy.arn
+  ]
+}

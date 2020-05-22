@@ -1,0 +1,11 @@
+resource "helm_release" "nginx_ingress_external" {
+  name       = "nginx-ingress-external"
+  repository = data.helm_repository.stable.metadata.0.name
+  chart      = "nginx-ingress"
+  version    = local.nginx_helm_version
+  namespace  = "kube-system"
+
+  values = [
+    file("${path.module}/values/nginx_ingress_external.yaml")
+  ]
+}

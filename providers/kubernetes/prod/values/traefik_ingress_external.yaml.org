@@ -27,7 +27,7 @@ kubernetes:
   ingressEndpoint:
     useDefaultPublishedService: true
 proxyProtocol:
-  enabled: false
+  enabled: true
 forwardedHeaders:
   enabled: false
 
@@ -149,7 +149,6 @@ service:
     service.beta.kubernetes.io/aws-load-balancer-ssl-cert: 'arn:aws:acm:eu-west-1:881792143615:certificate/ae5f1c5d-cd39-4f6e-a6fe-04ae8fe77169'
     service.beta.kubernetes.io/aws-load-balancer-ssl-ports: '443'
     external-dns.alpha.kubernetes.io/hostname: pfm-ingress.tarabutgateway.net
-    service.beta.kubernetes.io/aws-load-balancer-type: alb
 gzip:
   enabled: true
 accessLogs:
