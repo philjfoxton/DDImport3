@@ -1,0 +1,1 @@
+https://github.com/pahud/amazon-eks-workshop/tree/master/03-creating-services/ingress/traefik-ingress

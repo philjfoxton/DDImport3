@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+ name: hack-auth-api
+ namespace: prod
+ annotations:
+   kubernetes.io/ingress.class: traefik
+   traefik.frontend.rule.type: PathPrefix
+   ingress.kubernetes.io/custom-response-headers: "X-Android-Min-Version:1 || X-iOS-Min-Version:1"
+   traefik.ingress.kubernetes.io/whitelist-source-range: "108.128.109.56/32, 52.212.228.46/32, 63.32.247.102/32, 109.86.219.17/32, 188.130.178.90"
+spec:
+ rules:
+ - host: secured-api-nbb.tarabutgateway.net
+   http:
+     paths:
+     - backend:
+         serviceName: internal-auth-api
+         servicePort: 80
+       path: /v1/auth/nbb/privateauth
